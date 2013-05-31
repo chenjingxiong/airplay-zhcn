@@ -3,9 +3,10 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/>
-    <meta http-equiv="Content-language" content="en"/>
-    <meta name="keywords" content="airplay,airtunes,protocol,specification"/>
+    <meta http-equiv="Content-language" content="zh-cn"/>
+    <meta name="keywords" content="airplay,airtunes,protocol,specification,协议,规范"/>
     <meta name="author" content="Clément Vasseur"/>
+    <meta name="translator" content="Jie Chen"/>
     <title>Unofficial AirPlay Protocol Specification</title>
     <link rel="stylesheet" type="text/css" href="AirPlay.css"/>
     <script type="text/javascript">
@@ -25,93 +26,82 @@
   </head>
   <body>
     <div id="content">
-      <h1 class="title">Unofficial AirPlay Protocol Specification</h1>
+      <h1 class="title">非官方AirPlay协议规范</h1>
       <ul class="toc">
-        <li><a href="#introduction">1. Introduction</a></li>
-        <li><a href="#servicediscovery">2. Service Discovery</a></li>
+        <li><a href="#introduction">1. 介绍</a></li>
+        <li><a href="#servicediscovery">2. 服务发现</a></li>
         <li><ul>
-          <li><a href="#servicediscovery-airtunesservice">2.1. AirTunes service</a></li>
-          <li><a href="#servicediscovery-airplayservice">2.2. AirPlay Service</a></li>
+          <li><a href="#servicediscovery-airtunesservice">2.1. AirTunes服务</a></li>
+          <li><a href="#servicediscovery-airplayservice">2.2. AirPlay服务</a></li>
         </ul></li>
-        <li><a href="#photos">3. Photos</a></li>
+        <li><a href="#photos">3. 图片</a></li>
         <li><ul>
-          <li><a href="#photos-httprequests">3.1. HTTP requests</a></li>
-          <li><a href="#photos-events">3.2. Events</a></li>
-          <li><a href="#photos-photocaching">3.3. Photo Caching</a></li>
-          <li><a href="#photos-slideshows">3.4. Slideshows</a></li>
+          <li><a href="#photos-httprequests">3.1. HTTP请求</a></li>
+          <li><a href="#photos-events">3.2. 事件</a></li>
+          <li><a href="#photos-photocaching">3.3. 图片缓存</a></li>
+          <li><a href="#photos-slideshows">3.4. 幻灯片</a></li>
         </ul></li>
-        <li><a href="#video">4. Video</a></li>
+        <li><a href="#video">4. 视频</a></li>
         <li><ul>
-          <li><a href="#video-httprequests">4.1. HTTP requests</a></li>
-          <li><a href="#video-events">4.2. Events</a></li>
+          <li><a href="#video-httprequests">4.1. HTTP请求</a></li>
+          <li><a href="#video-events">4.2. 事件</a></li>
         </ul></li>
-        <li><a href="#audio">5. Audio</a></li>
+        <li><a href="#audio">5. 音频</a></li>
         <li><ul>
-          <li><a href="#audio-rtsprequests">5.1. RTSP requests</a></li>
-          <li><a href="#audio-rtpstreams">5.2. RTP Streams</a></li>
-          <li><a href="#audio-volumecontrol">5.3. Volume Control</a></li>
-          <li><a href="#audio-metadata">5.4. Metadata</a></li>
-          <li><a href="#audio-airportexpressauthentication">5.5. AirPort Express Authentication</a></li>
-          <li><a href="#audio-remotecontrol">5.6. Remote Control</a></li>
+          <li><a href="#audio-rtsprequests">5.1. RTSP请求</a></li>
+          <li><a href="#audio-rtpstreams">5.2. RTP流</a></li>
+          <li><a href="#audio-volumecontrol">5.3. 音量控制</a></li>
+          <li><a href="#audio-metadata">5.4. 元数据</a></li>
+          <li><a href="#audio-airportexpressauthentication">5.5. AirPort Express认证</a></li>
+          <li><a href="#audio-remotecontrol">5.6. 远程控制</a></li>
         </ul></li>
-        <li><a href="#screenmirroring">6. Screen Mirroring</a></li>
+        <li><a href="#screenmirroring">6. 屏幕镜像</a></li>
         <li><ul>
-          <li><a href="#screenmirroring-httprequests">6.1. HTTP requests</a></li>
-          <li><a href="#screenmirroring-streampackets">6.2. Stream Packets</a></li>
-          <li><a href="#screenmirroring-timesynchronization">6.3. Time Synchronization</a></li>
+          <li><a href="#screenmirroring-httprequests">6.1. HTTP请求</a></li>
+          <li><a href="#screenmirroring-streampackets">6.2. 媒体流数据包</a></li>
+          <li><a href="#screenmirroring-timesynchronization">6.3. 时钟同步</a></li>
         </ul></li>
-        <li><a href="#passwordprotection">7. Password Protection</a></li>
-        <li><a href="#history">8. History</a></li>
-        <li><a href="#resources">9. Resources</a></li>
+        <li><a href="#passwordprotection">7. 密码保护</a></li>
+        <li><a href="#history">8. 历史</a></li>
+        <li><a href="#resources">9. 参考资料</a></li>
         <li><ul>
           <li><a href="#resources-ietfrfcs">9.1. IETF RFCs</a></li>
-          <li><a href="#resources-ietfdrafts">9.2. IETF drafts</a></li>
-          <li><a href="#resources-appleprotocols">9.3. Apple Protocols</a></li>
+          <li><a href="#resources-ietfdrafts">9.2. IETF草案</a></li>
+          <li><a href="#resources-appleprotocols">9.3. Apple相关协议</a></li>
         </ul></li>
       </ul>
 
-      <h1 id="introduction">1. Introduction</h1>
-      <p>AirPlay is a family of protocols implemented by Apple to view various
-      types of media content on the <em>Apple TV</em> from any iOS device or iTunes.
-      In this documentation, &#8220;<em>iOS device</em>&#8221; refers to an iPhone, iPod touch or
-      iPad. The following scenarios are supported by AirPlay:</p>
-
+      <h1 id="introduction">1. 介绍</h1>
+      <p>AirPlay是由苹果公司实现的一套协议族，用来实现在<em>Apple TV</em>上浏览iOS或者iTunes设备中的各种媒体内容。
+      本文中的&#8220;<em>iOS设备</em>&#8221; 是指iPhone、iPod touch或者iPad。
+      AirPlay支持如下几种使用场景:</p>
+	  
       <ul>
-      <li><p>Display photos and slideshows from an iOS device.</p></li>
-      <li><p>Stream audio from an iOS device or iTunes.</p></li>
-      <li><p>Display videos from an iOS device or iTunes.</p></li>
-      <li><p>Show the screen content from an iOS device or OS X Mountain Lion.
-       This is called <em>AirPlay Mirroring</em>. It requires hardware capable of
-       encoding live video without taking too much CPU, so it is only
-       available on iPhone 4S, iPad 2, the new iPad, and Macs with Sandy
-       Bridge CPUs.</p></li>
+      <li><p>从iOS设备上传输并显示照片、幻灯片；</p></li>
+      <li><p>从iOS设备或者Itunes软件中传输并播放音频；</p></li>
+      <li><p>从iOS设备或者Itunes软件中传输并播放视频；</p></li>
+      <li><p>对iOS设备或者OS X Mountain Lion进行<em>屏幕镜像</em>。由于此功能需要硬件的硬解码支持，所以只能在iPad 2、iPhone 4S、带Sandy
+       Bridge CPU的Mac电脑（或更新的设备）上支持。</p></li>
       </ul>
 
-      <p>Audio streaming is also supported from an iOS device or iTunes to an
-      AirPort Express base station or a 3<sup>rd</sup> party AirPlay-enabled audio
-      device. Initially this was called <em>AirTunes</em>, but it was later renamed
-      to AirPlay when Apple added video support for the Apple TV.</p>
+	     <p>最初这套协议名字叫<em>AirTunes</em>，只支持音频流播放。
+	  后来苹果开发Apple TV时，对此协议进行了扩充和改进，加入了视频支持，并改名叫做<em>AirPlay</em>。
 
-      <p>This document describes these protocols, as implemented in Apple TV
-      software version 5.0, iOS 5.1 and iTunes 10.6. They are based on
-      well-known standard networking protocols such as <em>Multicast DNS</em>,
-      <em>HTTP</em>, <em>RTSP</em>, <em>RTP</em> or <em>NTP</em>, with custom extensions.</p>
+      <p>本文描述了这些协议，它们在Apple TV软件5.0版本, iOS 5.1 和 iTunes 10.6以后被苹果支持。
+	  AirPlay协议基于一些知名的网络标准协议，如<em>Multicast DNS</em>、<em>HTTP</em>、<em>RTSP</em>、<em>RTP</em>或<em>NTP</em>以及其他的一些自定义扩展。</p>
 
-      <p>All these information have been gathered by using various techniques of
-      reverse engineering, so they might be somewhat inaccurate and
-      incomplete. Moreover, this document does not explain how to circumvent
-      any kind of security implemented by Apple:</p>
+	     <p>本文中的内容是通过各种逆向工程技术而收集整理的，所以有些信息可能不一定十分准确。
+	  本文并没有说明如何来规避苹果的一些安全机制实现，如：</p>
 
       <ul>
-      <li><p>It does not give any RSA keys.</p></li>
-      <li><p>It does not explain how to decode iTunes videos protected with the
-       <em>FairPlay</em> DRM.</p></li>
-      <li><p>It does not explain the FairPlay authentication (SAPv2.5) used by iOS
-       devices and OS X Mountain Lion to protect audio and screen content.</p></li>
+      <li><p>本文不提供任何的RSA密钥信息；</p></li>
+      <li><p>本文无法解释如何来解码被苹果<em>FairPlay</em> DRM技术加密保护的媒体内容；</p></li>
+      <li><p>本文未解释FairPlay认证技术(SAPv2.5)，它们在iOS设备和OS X Mountain Lion中用来保护音视频和屏幕内容。</p></li>
       </ul>
 
-      <p>Please don&#8217;t e-mail me about this, I won&#8217;t reply. In fact, none of this
-      is actually required to be able to view media content on Apple TV.</p>
+      <p>请不要e-mail给原作者, 原作者不会回复任何邮件的。作者把他要说的都写在这份漂亮的文档中了，无需再多说什么。</p>
+	  
+	     <p>但是简体中文版的译者欢迎和大家一起交流，共同学习和完善这份文档。翻译过程中肯定还有很多不完善的地方，大家多多支持。</p>
 
       <h1 id="servicediscovery">2. Service Discovery</h1>
       <p>AirPlay does not require any configuration to be able to find compatible
