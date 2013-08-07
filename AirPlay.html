@@ -103,18 +103,13 @@
 	  
 	     <p>但是简体中文版的译者欢迎和大家一起交流，共同学习和完善这份文档。翻译过程中肯定还有很多不完善的地方，大家多多支持。</p>
 
-      <h1 id="servicediscovery">2. Service Discovery</h1>
-      <p>AirPlay does not require any configuration to be able to find compatible
-      devices on the network, thanks to <a href="http://www.ietf.org/id/draft-cheshire-dnsext-dns-sd-11.txt">DNS-based service discovery</a>, based
-      on <a href="http://www.ietf.org/id/draft-cheshire-dnsext-multicastdns-15.txt">multicast DNS</a>, aka <em>Bonjour</em>.</p>
+      <h1 id="servicediscovery">2. 服务发现</h1>
+      <p>使用AirPlay协议不需要做任何配置就能发现同一网络中的相关设备，这主要得益于<em>Bonjour</em>协议（基于M-DNS协议实现），参考RFC文档<a href="http://www.ietf.org/id/draft-cheshire-dnsext-dns-sd-11.txt">DNS-based service discovery</a>。</p>
 
-      <p>An AirPlay device such as the Apple TV publishes two services. The first
-      one is <em>RAOP</em> (<a href="http://en.wikipedia.org/wiki/Remote_Audio_Output_Protocol">Remote Audio Output Protocol</a>), used for audio
-      streaming, and the other one is the AirPlay service, for photo and video
-      content.</p>
+      <p>一个AirPlay设备（例如Apple TV）会对外发布两个服务。其中一个是<em>RAOP</em> (<a href="http://en.wikipedia.org/wiki/Remote_Audio_Output_Protocol">Remote Audio Output Protocol</a>)，它实现了音频流媒体；另外一个是AirPlay服务，针对的是图片和视频内容。</p>
 
-      <h2 id="servicediscovery-airtunesservice">2.1. AirTunes service</h2>
-      <p class="caption">RAOP service from Apple TV</p>
+      <h2 id="servicediscovery-airtunesservice">2.1. AirTunes服务</h2>
+      <p class="caption">RAOP服务</p>
 
       <pre><code>name: 5855CA1AE288@Apple TV
 type: _raop._tcp
@@ -137,10 +132,9 @@ txt:
  sf=0x4
 </code></pre>
 
-      <p>The name is formed using the MAC address of the device and the name of
-      the remote speaker which will be shown by the clients.</p>
+      <p>name字段由设备的MAC地址和远程设备的名称组成（通常就在客户端上显示此设备名称）</p>
 
-      <p>The following fields appear in the TXT record:</p>
+      <p>TXT参数中包含以下字段：</p>
 
       <table>
       <colgroup>
@@ -151,9 +145,9 @@ txt:
 
       <thead>
       <tr>
-       <th style="text-align:left;">name</th>
-       <th style="text-align:left;">value</th>
-       <th style="text-align:left;">description</th>
+       <th style="text-align:left;">键值名</th>
+       <th style="text-align:left;">值</th>
+       <th style="text-align:left;">描述</th>
       </tr>
       </thead>
 
@@ -226,7 +220,7 @@ txt:
       <thead>
       <tr>
        <th style="text-align:left;">cn</th>
-       <th style="text-align:left;">description</th>
+       <th style="text-align:left;">描述</th>
       </tr>
       </thead>
 
@@ -260,7 +254,7 @@ txt:
       <thead>
       <tr>
        <th style="text-align:left;">et</th>
-       <th style="text-align:left;">description</th>
+       <th style="text-align:left;">描述</th>
       </tr>
       </thead>
 
@@ -298,7 +292,7 @@ txt:
       <thead>
       <tr>
        <th style="text-align:left;">md</th>
-       <th style="text-align:left;">description</th>
+       <th style="text-align:left;">描述</th>
       </tr>
       </thead>
 
@@ -317,8 +311,8 @@ txt:
       </tr>
       </tbody>
       </table>
-      <h2 id="servicediscovery-airplayservice">2.2. AirPlay Service</h2>
-      <p class="caption">AirPlay service</p>
+      <h2 id="servicediscovery-airplayservice">2.2. AirPlay服务</h2>
+      <p class="caption">AirPlay服务</p>
 
       <pre><code>name: Apple TV
 type: _airplay._tcp
@@ -330,7 +324,7 @@ txt:
  srcvers=130.14
 </code></pre>
 
-      <p>The following fields are available in the TXT record:</p>
+      <p>TXT参数中包含以下字段：</p>
 
       <table>
       <colgroup>
@@ -341,9 +335,9 @@ txt:
 
       <thead>
       <tr>
-       <th style="text-align:left;">name</th>
-       <th style="text-align:left;">value</th>
-       <th style="text-align:left;">description</th>
+       <th style="text-align:left;">键值名</th>
+       <th style="text-align:left;">值</th>
+       <th style="text-align:left;">描述</th>
       </tr>
       </thead>
 
@@ -370,10 +364,9 @@ txt:
       </tr>
       </tbody>
       </table>
-      <p>The <code>pw</code> field appears only if the AirPlay server is password protected.
-      Otherwise it is not included in the TXT record.</p>
+      <p>其中，<code>pw</code> 字段只有在AirPlay服务被加密时才会出现。</p>
 
-      <p>The <code>features</code> bitfield allows the following features to be defined:</p>
+      <p>其中，<code>features</code>位域值定义如下：</p>
 
       <table>
       <colgroup>
