@@ -377,9 +377,9 @@ txt:
 
       <thead>
       <tr>
-       <th style="text-align:left;">bit</th>
-       <th style="text-align:left;">name</th>
-       <th style="text-align:left;">description</th>
+       <th style="text-align:left;">位</th>
+       <th style="text-align:left;">名称</th>
+       <th style="text-align:left;">描述</th>
       </tr>
       </thead>
 
@@ -446,15 +446,11 @@ txt:
       </tr>
       </tbody>
       </table>
-      <p>Note that the Apple TV does not support <code>VideoVolumeControl</code>. It has
-      probably been introduced for the upcoming Apple television.</p>
+      <p>目前Apple TV并不支持<code>VideoVolumeControl</code>属性，也许以后Apple电视会增加支持。</p>
 
-      <p>The AirPlay server is a <em>HTTP</em> server (<a href="http://www.ietf.org/rfc/rfc2616.txt">RFC 2616</a>). Two connections are
-      made to this server, the second one being used as a <a href="http://tools.ietf.org/id/draft-lentczner-rhttp-00.txt">reverse HTTP</a>
-      connection. This allows a client to receive asynchronous events, such
-      as playback status changes, from a server.</p>
+      <p>AirPlay服务器是一个 <em>HTTP</em>服务器 （<a href="http://www.ietf.org/rfc/rfc2616.txt">RFC 2616</a>）。客户端和此服务器之间会存在两条连接，第二条是<a href="http://tools.ietf.org/id/draft-lentczner-rhttp-00.txt">反向HTTP</a>连接。这样客户端就可以接收到服务器发送的异步事件，比如播放状态变更等。</p>
 
-      <p>All HTTP requests share some common headers:</p>
+      <p>所有的HTTP请求都包括如下头字段:</p>
 
       <table>
       <colgroup>
@@ -465,9 +461,9 @@ txt:
 
       <thead>
       <tr>
-       <th style="text-align:left;">name</th>
-       <th style="text-align:left;">value</th>
-       <th style="text-align:left;">description</th>
+       <th style="text-align:left;">名称</th>
+       <th style="text-align:left;">值</th>
+       <th style="text-align:left;">描述</th>
       </tr>
       </thead>
 
@@ -484,7 +480,7 @@ txt:
       </tr>
       </tbody>
       </table>
-      <p>The reverse connection looks like this:</p>
+      <p>反向HTTP连接如下所示：</p>
 
       <p class="cli_srv">client &rarr; server</p>
 
@@ -505,23 +501,17 @@ Upgrade: PTTH/1.0
 Connection: Upgrade
 </code></pre>
 
-      <p>The <code>X-Apple-Purpose</code> header makes it clear that this connection is used
-      for sending events to the client, whereas <code>X-Apple-Session-ID</code> is used
-      to link this connection to the other (non-reverse) one. Events are
-      delivered using a <code>POST</code> request for sending an XML property list to the
-      <code>/event</code> location.</p>
+      <p><code>X-Apple-Purpose</code>头表明这个连接是用来向客户端发送事件的，<code>X-Apple-Session-ID</code>头是用来标明和另一路正向连接之间的对应关系。事件通知通过<code>POST</code>请求发送并携带一个XML属性列表到
+      <code>/event</code>路径中。</p>
 
-      <h1 id="photos">3. Photos</h1>
-      <p>Photos are <em>JPEG</em> data transmitted using a <code>PUT</code> request to the AirPlay
-      server. They can be displayed immediately, or cached for future use.</p>
+      <h1 id="photos">3. 图片</h1>
+      <p>图片是通过<code>PUT</code>请求发送给AirPlay服务器的<em>JPEG</em>数据。它们可以立即被显示出来，也可以缓存下来供后续使用。</p>
 
-      <h2 id="photos-httprequests">3.1. HTTP requests</h2>
+      <h2 id="photos-httprequests">3.1. HTTP请求</h2>
       <h3>GET /slideshow-features</h3>
 
-      <p>A client can fetch the list of available transitions for slideshows.
-      Then it can let the user pick one, before starting a slideshow. The
-      <code>Accept-Language</code> header is used to specify in which language the
-      transition names should be.</p>
+      <p>客户端可以获取幻灯片支持的切换效果列表，然后让用户选择一个再开始幻灯演示。
+      <code>Accept-Language</code>头用来指定幻灯切换效果名称的语言。</p>
 
       <p class="cli_srv">client &rarr; server</p>
 
@@ -560,7 +550,7 @@ Content-Length: 6411
 
       <h3>PUT /photo</h3>
 
-      <p>Send a JPEG picture to the server. The following headers are supported:</p>
+      <p>向服务器发送一个JPEG图片，支持一下HTTP头：</p>
 
       <table>
       <colgroup>
@@ -570,8 +560,8 @@ Content-Length: 6411
 
       <thead>
       <tr>
-       <th style="text-align:left;">name</th>
-       <th style="text-align:left;">description</th>
+       <th style="text-align:left;">名称</th>
+       <th style="text-align:left;">描述</th>
       </tr>
       </thead>
 
@@ -590,7 +580,7 @@ Content-Length: 6411
       </tr>
       </tbody>
       </table>
-      <p><span class="ex">Example 1:</span> show a picture without any transition (for the first time)</p>
+      <p><span class="ex">示例1:</span> 显示一幅图片（用于第一次展示，无切换效果）</p>
 
       <p class="cli_srv">client &rarr; server</p>
 
@@ -610,7 +600,7 @@ Date: Thu, 23 Feb 2012 17:33:42 GMT
 Content-Length: 0
 </code></pre>
 
-      <p><span class="ex">Example 2:</span> show a picture using the dissolve transition</p>
+      <p><span class="ex">示例2:</span> 显示一幅图片，使用溶解切换效果</p>
 
       <p class="cli_srv">client &rarr; server</p>
 
@@ -633,9 +623,7 @@ Content-Length: 0
 
       <h3>PUT /slideshows/1</h3>
 
-      <p>Start or stop a slideshow session. When starting, slideshow settings
-      such as the slide duration and selected transition theme are
-      transmitted. The following parameters are sent in an XML property list:</p>
+      <p>开始或结束一个幻灯演示会话。开始时，首先传输幻灯演示相关设置，包括单张图片显示时长和切换主题。在XML属性文件中包括以下参数：</p>
 
       <table>
       <colgroup>
@@ -646,9 +634,9 @@ Content-Length: 0
 
       <thead>
       <tr>
-       <th style="text-align:left;">key</th>
-       <th style="text-align:left;">type</th>
-       <th style="text-align:left;">description</th>
+       <th style="text-align:left;">键值名</th>
+       <th style="text-align:left;">类型</th>
+       <th style="text-align:left;">描述</th>
       </tr>
       </thead>
 
@@ -670,7 +658,7 @@ Content-Length: 0
       </tr>
       </tbody>
       </table>
-      <p><span class="ex">Example:</span> send slideshow settings</p>
+      <p><span class="ex">示例:</span> 发送幻灯片设置参数</p>
 
       <p class="cli_srv">client &rarr; server</p>
 
@@ -715,7 +703,7 @@ Content-Length: 181
 
       <h3>POST /stop</h3>
 
-      <p>Stop a photo or slideshow session.</p>
+      <p>结束一个图片显示或幻灯演示会话。</p>
 
       <p class="cli_srv">client &rarr; server</p>
 
@@ -732,11 +720,10 @@ Date: Thu, 23 Feb 2012 17:33:55 GMT
 Content-Length: 0
 </code></pre>
 
-      <h2 id="photos-events">3.2. Events</h2>
-      <h3>Photo</h3>
+      <h2 id="photos-events">3.2. 事件</h2>
+      <h3>图片</h3>
 
-      <p>This event notifies a client that a photo session has ended. Then the
-      server can safely disconnect.</p>
+      <p>这个事件通知客户端图片会话已经结束，然后服务端就可以安全的断开连接。</p>
 
       <table>
       <colgroup>
@@ -747,9 +734,9 @@ Content-Length: 0
 
       <thead>
       <tr>
-       <th style="text-align:left;">key</th>
-       <th style="text-align:left;">type</th>
-       <th style="text-align:left;">description</th>
+       <th style="text-align:left;">键值名</th>
+       <th style="text-align:left;">类型</th>
+       <th style="text-align:left;">描述</th>
       </tr>
       </thead>
 
@@ -771,7 +758,7 @@ Content-Length: 0
       </tr>
       </tbody>
       </table>
-      <p><span class="ex">Example:</span> stop photo session</p>
+      <p><span class="ex">示例：</span> 结束图片会话</p>
 
       <p class="srv_cli">server &rarr; client</p>
 
@@ -801,9 +788,9 @@ X-Apple-Session-ID: 1bd6ceeb-fffd-456c-a09c-996053a7a08c
 Content-Length: 0
 </code></pre>
 
-      <h3>Slideshow</h3>
+      <h3>幻灯演示</h3>
 
-      <p>Slideshow events are used to notify the server about the playback state.</p>
+      <p>幻灯事件用来通知客户端播放状态变更。</p>
 
       <table>
       <colgroup>
@@ -814,9 +801,9 @@ Content-Length: 0
 
       <thead>
       <tr>
-       <th style="text-align:left;">key</th>
-       <th style="text-align:left;">type</th>
-       <th style="text-align:left;">description</th>
+       <th style="text-align:left;">键值名</th>
+       <th style="text-align:left;">类型</th>
+       <th style="text-align:left;">描述</th>
       </tr>
       </thead>
 
@@ -843,7 +830,7 @@ Content-Length: 0
       </tr>
       </tbody>
       </table>
-      <p><span class="ex">Example:</span> slideshow is currently playing</p>
+      <p><span class="ex">示例：</span> 幻灯演示现在正在播放</p>
 
       <p class="srv_cli">server &rarr; client</p>
 
@@ -875,8 +862,8 @@ X-Apple-Session-ID: f1634b51-5cae-4384-ade5-54f4159a15f1
 Content-Length: 0
 </code></pre>
 
-      <h2 id="photos-photocaching">3.3. Photo Caching</h2>
-      <p>AirPlay supports preloading picture data to improve transition latency.
+      <h2 id="photos-photocaching">3.3. 图片缓存</h2>
+      <p>AirPlay支持预加载图片数据来减少图片切换延迟。
       This works by preloading a few pictures (most likely the ones before and
       after the current picture) just after displaying one.</p>
 
@@ -889,7 +876,7 @@ Content-Length: 0
       <p>When asked for a picture which is no longer in the cache, a server
       replies with an HTTP 412 error code (Precondition Failed).</p>
 
-      <p><span class="ex">Example 1:</span> cache a picture for future display</p>
+      <p><span class="ex">示例1：</span> cache a picture for future display</p>
 
       <p class="cli_srv">client &rarr; server</p>
 
@@ -910,7 +897,7 @@ Date: Thu, 23 Feb 2012 17:33:45 GMT
 Content-Length: 0
 </code></pre>
 
-      <p><span class="ex">Example 2:</span> show a cached picture</p>
+      <p><span class="ex">示例2：</span> show a cached picture</p>
 
       <p class="cli_srv">client &rarr; server</p>
 
